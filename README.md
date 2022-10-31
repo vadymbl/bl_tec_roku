@@ -2,9 +2,9 @@
 This repo is used to moderate and cooperate Roku app development in scope of BL + Pernix + TEC initiative.
 
 ### Cooperation flow
-1. Please clone this repo and create branch based on template ${firstname}_${lastName}
+1. Please clone this repo and create branch based on template {firstname}_{lastName}
 2. Created branch will be your master branch
-3. To make changes into "your master branch" please use merge requests. Work branches should have names based on template ${firstname}_${lastName}_${briefWorkSummary}
+3. To make changes into "your master branch" please use merge requests. Work branches should have names based on template {firstname}_{lastName}_{briefWorkSummary}
 4. All comunications will be happening in merge requests
 
 ### Links
