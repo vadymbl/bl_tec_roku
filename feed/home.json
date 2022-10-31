@@ -1,15 +1,19 @@
 {
     "videos": [{
         "title": "Video 1",
+        "hdPosterUrl": "https://dummyimage.com/600x400/d9d9d9/ff0037&text=Video+1",
         "url": "pkg:/feed/v1.mp4"
     },{
         "title": "Video 2",
+        "hdPosterUrl": "https://dummyimage.com/600x400/634482/e39529&text=Video+2",
         "url": "pkg:/feed/v2.mp4"
     },{
         "title": "Video 3",
+        "hdPosterUrl": "https://dummyimage.com/600x400/1a181a/00ff04&text=Video+3",
         "url": "pkg:/feed/v3.mp4"
     },{
         "title": "Video 4",
+        "hdPosterUrl": "https://dummyimage.com/600x400/8f0e0e/0037ff&text=Video+4",
         "url": "pkg:/feed/v4.mp4"
     }]
 }
