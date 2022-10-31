@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="VideoSelectionScreen" extends="SGDEXComponent" >
+    <interface>
+        <field id="itemSelected" type="integer" alias="list.itemSelected" />
+        <field id="contentManagerType" type="string" value="grid" />
+        <field id="itemFocused" type="integer" />
+    </interface>
+
+    <script type="text/brightscript" uri="VideoSelectionScreen.brs" />
+
+    <children>
+        <LabelList id="list"
+            translation="[115, 120]"
+            itemSpacing="[10,25]"
+            itemSize="[1080, 55]"
+            numRows="6"
+            itemClippingRect="[0,0,1280,720]"
+            vertFocusAnimationStyle="floatingFocus"
+        />
+    </children>
+</component>

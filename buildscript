@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Usage: ./buildscript <IP_ADDRESS>
+# Example: ./buildscript 10.24.24.162
+
+show_help () {
+    echo "ERROR: IP address missing. Example usage: ./buildscript -i 10.24.24.123 -d devpassword";
+    exit;
+}
+
+# Check for the presence of a parameter. If it is not present, abort and notify the user.
+if [ -z "$1" ]
+then
+    show_help;
+fi
+
+# Arguments default values
+USERPASS=rokudev:aaaa
+
+# Parsing the input arguments
+# The IP is only one required argument
+while getopts "h?d:i:" opt; do
+    case "$opt" in
+    h|\?) show_help
+        ;;
+    d)  USERPASS=rokudev:$OPTARG
+        ;;
+    i)  IP=$OPTARG
+    esac
+done
+
+if [ -z ${IP+x} ]; then
+    show_help;
+fi
+
+# Delete old zip.
+echo "Deleting old zip..."
+rm app.zip
+
+# Create the zip file.
+echo "Creating new zip..."
+zip -FS -9 -r app.zip manifest components/ assets/ certs/ languages/ feed/ images/ fonts/ source/
+
+# Close any active app by pressing the home button on the Roku.
+# This prevents problems with spontaneous device reboots when running and deploying SceneGraph apps.
+echo "Sending home button press..."
+curl -sS -d '' http://$IP:8060/keypress/Home
+
+# Wait for a number of seconds so the Roku can close any running app properly and go back to home. 
+# Increase number of seconds if needed on slower Roku hardware.
+echo "Waiting 1 second..."
+sleep 1
+
+# Upload the zip to the Roku.
+echo "Pushing zip to Roku..."
+curl --user $USERPASS --anyauth -sS -F "mysubmit=Install" -F "archive=@app.zip" http://$IP/plugin_install | grep red
