@@ -3,8 +3,12 @@ sub show(args as Object)
 end sub
 
 sub ShowHomeScreen()
-    homeScreen = CreateObject("roSGNode", "VideoSelectionScreen")
-    homeScreen.ObserveFieldScoped("itemSelected", "OnItemSelected")
+    homeScreen = CreateObject("roSGNode", "GridView")
+    homeScreen.setFields({
+        style: "standard"
+        posterShape: "16x9"
+    })
+    homeScreen.ObserveFieldScoped("rowItemSelected", "OnItemSelected")
     content = CreateObject("roSGNode", "ContentNode")
     content.Update({
         HandlerConfigGrid: {
@@ -12,6 +16,7 @@ sub ShowHomeScreen()
             }
     }, true)
     homeScreen.content = content
+    homeScreen.showSpinner = true
     m.top.componentController.callFunc("show", {
         view: homeScreen
     })
@@ -19,17 +24,15 @@ end sub
 
 sub OnItemSelected(event as Object)
     homeScreen = event.GetRoSGNode()
-    ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)
+    ShowVideoPlayer(homeScreen.content.getChildren(-1,0), homeScreen.rowItemSelected[0], homeScreen.rowItemSelected[1])
 end sub
 
-sub ShowVideoPlayer(content as Object, itemSelected as Integer)
-    videoNode = CreateObject("roSGNode", "Video")
+sub ShowVideoPlayer(content as Object, rowSelected as Integer, itemSelected as Integer)
+    videoNode = CreateObject("roSGNode", "MediaView")
+    videoNode.content = content[rowSelected]
+    videoNode.jumpToItem = itemSelected
+    videoNode.isContentList = true
     videoNode.control = "play"
-    videoNode.content = content
-    videoNode.contentIsPlaylist = true
-    videoNode.loop = true
-    videoNode.nextContentIndex = itemSelected
-    videoNode.control = "skipcontent"
     m.top.componentController.callFunc("show", {
         view: videoNode
     })
