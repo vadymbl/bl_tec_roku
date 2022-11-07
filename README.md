@@ -16,3 +16,5 @@ This repo is used to moderate and cooperate Roku app development in scope of BL 
 | Roku samples GitHub | https://github.com/rokudev/samples |
 | SGDEX GitHub | https://github.com/rokudev/SceneGraphDeveloperExtensions/ |
 | Roku developers youtube | https://www.youtube.com/channel/UCklBwEFshXsU-NnzRwO-6Pw |
+| BrightLine SDK pkg | https://cdn-media.brightline.tv/sdk/gen2/roku/direct/pkgs/BrightLineDirect-3.0.1.pkg |
+| BrightLine integration guide | https://cdn-media.brightline.tv/sdk/gen2/guides/roku_direct_new.html |
