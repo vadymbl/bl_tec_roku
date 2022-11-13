@@ -3,8 +3,8 @@ sub show(args as Object)
 end sub
 
 sub ShowHomeScreen()
-    homeScreen = CreateObject("roSGNode", "VideoSelectionScreen")
-    homeScreen.ObserveFieldScoped("itemSelected", "OnItemSelected")
+    homeScreen = CreateObject("roSGNode", "GridView")
+    homeScreen.ObserveFieldScoped("rowitemSelected", "OnItemSelected")
     content = CreateObject("roSGNode", "ContentNode")
     content.Update({
         HandlerConfigGrid: {
@@ -19,7 +19,7 @@ end sub
 
 sub OnItemSelected(event as Object)
     homeScreen = event.GetRoSGNode()
-    ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)
+    ShowVideoPlayer(homeScreen.content, homeScreen.rowitemSelected[1])
 end sub
 
 sub ShowVideoPlayer(content as Object, itemSelected as Integer)
