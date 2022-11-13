@@ -2,12 +2,13 @@ sub GetContent()
     items = []
     rows = []
     url = CreateObject("roUrlTransfer")
-    url.SetUrl("http://no-cache.s3.us-east-2.amazonaws.com/vyarchych-home/tec/public_vids.json")
+    url.SetCertificatesFile("common:/certs/ca-bundle.crt")
+    url.SetUrl("https://no-cache.s3.us-east-2.amazonaws.com/vyarchych-home/tec/public_vids.json")
     body = url.GetToString()
     ?body
     json = ParseJSON(body)
     ?json
-    for each video in json["categories"][0]["videos"]
+    for each video in json?["categories"]?[0]?["videos"]
         ?video
         ?video.sources[0]
         node = CreateObject("roSGNode","ContentNode")
