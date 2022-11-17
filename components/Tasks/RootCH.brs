@@ -2,6 +2,7 @@ sub GetContent()
     rows = []
     oddItems = []
     evenItems = []
+    adArray = []
     flag = true
 
     url = CreateObject("roUrlTransfer")
@@ -14,11 +15,12 @@ sub GetContent()
         video = videos[p]
         node = CreateObject("roSGNode", "ContentNode")
         node.setFields({
-            description: video.description
+            description: video.description,
             hdPosterUrl: video.thumb,
             title: video.title,
             url: video.sources[0]
         })
+        adArray.Push (video.interactiveAd)
         if flag then
             oddItems.Push(node)
         else
@@ -35,5 +37,7 @@ sub GetContent()
         children: evenItems,
         title: "BL+TEC Samples (even entries)"
     })
+
+    m.global.addFields({ads: adArray})
     m.top.content.Update({children: rows})
 end sub
