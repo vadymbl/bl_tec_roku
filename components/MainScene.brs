@@ -1,13 +1,20 @@
 sub show(args as Object)
     ShowHomeScreen()
-    BrightLine_LoadAPI("pkg:/components/BrightLineDirect-3.0.2.pkg")
+    SceneThemeUpdate()
+    BrightLine_LoadAPI("https://cdn-media.brightline.tv/sdk/gen2/roku/direct/pkgs/BrightLineDirect-3.0.2.pkg")
 end sub
 
 sub ShowHomeScreen()
     homeScreen = CreateObject("roSGNode", "GridView")
     homeScreen.setFields({
-        style: "standard"
+        style: "zoom"
         posterShape: "16x9"
+    })
+    homeScreen.overhang.setFields({
+        color: "0x000000ff"
+        title: "BL+TEC+Pernix+MoraTK"
+        logoUri: "pkg:/images/channel-poster_top.png"
+        showClock: true
     })
     homeScreen.ObserveFieldScoped("rowItemSelected", "OnItemSelected") 
     homeScreen.ObserveFieldScoped("selectedSDK", "OnSDKChanged")
@@ -23,6 +30,23 @@ sub ShowHomeScreen()
     m.top.componentController.callFunc("show", {
         view: homeScreen
     })
+end sub
+
+sub SceneThemeUpdate()
+    scene = m.top.getScene()
+    scene.updateTheme = {
+        global: {
+            backgroundColor: "0xc0c0c0ff"
+            backgroundImageUri: "pkg:/images/wallpaper.jpg"
+            focusFootprintColor: "0xc0c0c0ff"
+            focusRingColor: "0xff0000ff"
+        }
+        gridView: {
+            titleColor: "0xff8040ff"
+            descriptionColor: "0xffffffff"
+            rowLabelColor: "0xc0c0c0ff"
+        }
+    }
 end sub
 
 sub OnSDKChanged(event as Object)
@@ -47,7 +71,7 @@ sub StartBrightLinePlayback(content as Object, rowSelected as Integer, itemSelec
 
     videoPlayer = ShowVideoPlayer(content, rowSelected, itemSelected)
     m.currentAd = GetAdObject (p)
-    'CreateBrightLineDirect(videoPlayer)
+    CreateBrightLineDirect(videoPlayer)
 end sub
 
 sub ShowVideoPlayer(content as Object, rowSelected as Integer, itemSelected as Integer) as Object
@@ -71,9 +95,9 @@ sub CreateBrightLineDirect(videoNode as Object)
         ' Player should be actual video node that will do playback
         m.BrightLineDirect.action = {video: videoNode}
         ' Set the width of the UI
-        m.BrightLineDirect.action = {width: 1920}
+        m.BrightLineDirect.action = {width: 1280}
         ' Set the height of the UI
-        m.BrightLineDirect.action = {height: 1080}
+        m.BrightLineDirect.action = {height: 720}
         ' Here we set the trackers object
         m.BrightLineDirect.trackers = GetTrackers()
         ' We can make BrightLineDirect visible now.
@@ -88,6 +112,7 @@ function GetAdObject(adSelected as Integer) as Object
     ad = m.global.ads[adSelected]
     m.adStartTime = ad.strtTime
     m.adDuration = ad.duration
+    print "--> Attempting to show ad: " ad.url
 
     return {
         adId: 0315281           ' Populate from your ad

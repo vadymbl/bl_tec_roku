@@ -24,19 +24,10 @@ sub BrightLine_LoadStatus()
 
     ' Here we check the load status of the component library
     if (m.adlib.loadStatus = "ready")
-        'BrightLine_RunEnvironmentTask() ' just for demo purpose printing environment info
         m.brightlineLoaded = true
     else if m.adlib.loadStatus = "failed" then
         m.brightlineLoaded = false
     end if
-end sub
-
-sub BrightLine_RunEnvironmentTask()
-    'm.environmentInfoTask = createObject("roSGNode", "EnvironmentInfoTask")
-    '#if debug
-    '    m.environmentInfoTask.showDebug = true
-    '#endif
-    'm.environmentInfoTask.control = "run"
 end sub
 
 sub BrightLine_CreateBLDirect()
@@ -73,16 +64,16 @@ sub BrightLine_OnStateChange(msg as Object)
         ' Ready is set when lib is initialized and not showing ad.
         ' Send focus back to whatever you want.
         ' In this case we're using the video player.
-        m.componentController.currentView.SetFocus(true)
+        m.top.componentController.currentView.SetFocus(true)
     else if state = "ad_selector_completed" then
         ' To not show stream-stitched ad after ad selector we can skip to needed position in this callback
-        m.componentController.currentView.seek = m.adStartTime + m.adDuration
+        m.top.componentController.currentView.seek = m.adStartTime + m.adDuration
     else if state = "exited" then
         ' BrightLine has received an "exit" signal
         ' this is the equivalent of pressing the "back" key in a stream.
         print "BrightLine EXITED"
         ' this will close player screen
-        m.componentController.currentView.exited = true
+        m.top.componentController.currentView.exited = true
         m.BrightLineDirect.visible = false
     end if
 end sub
