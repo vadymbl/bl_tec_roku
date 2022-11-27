@@ -29,20 +29,30 @@ sub OnGridItemSelected(event as Object)
     ShowVideoPlayer(rowContent, selectedIndex[1])
 end sub
 
+' Subroutine no longer used
 sub OnItemSelected(event as Object)
     homeScreen = event.GetRoSGNode()
-    ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)
+    'ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)
 end sub
 
-sub ShowVideoPlayer(content as Object, itemSelected as Integer)
-    videoNode = CreateObject("roSGNode", "Video") ' mediaPlayer
-    videoNode.control = "play"
+sub ShowVideoPlayer(content as Object, index as Integer)
+    ' videoNode = CreateObject("roSGNode", "Video") ' mediaPlayer
+    ' videoNode.control = "play"
+    ' videoNode.content = content
+    ' videoNode.contentIsPlaylist = true
+    ' videoNode.loop = true
+    ' videoNode.nextContentIndex = itemSelected
+    ' videoNode.control = "skipcontent"
+    ' m.top.componentController.callFunc("show", {
+    '     view: videoNode
+    ' })
+    videoNode = CreateObject("roSGNode", "MediaView")
     videoNode.content = content
-    videoNode.contentIsPlaylist = true
-    videoNode.loop = true
-    videoNode.nextContentIndex = itemSelected
-    videoNode.control = "skipcontent"
-    m.top.componentController.callFunc("show", {
+    videoNode.jumpToItem = index
+    videoNode.isContentList = true
+    videoNode.control = "play"
+
+    m.top.ComponentController.CallFunc("show", {
         view: videoNode
     })
 end sub
