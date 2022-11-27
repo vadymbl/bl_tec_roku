@@ -36,16 +36,6 @@ sub OnItemSelected(event as Object)
 end sub
 
 sub ShowVideoPlayer(content as Object, index as Integer)
-    ' videoNode = CreateObject("roSGNode", "Video") ' mediaPlayer
-    ' videoNode.control = "play"
-    ' videoNode.content = content
-    ' videoNode.contentIsPlaylist = true
-    ' videoNode.loop = true
-    ' videoNode.nextContentIndex = itemSelected
-    ' videoNode.control = "skipcontent"
-    ' m.top.componentController.callFunc("show", {
-    '     view: videoNode
-    ' })
     videoNode = CreateObject("roSGNode", "MediaView")
     videoNode.content = content
     videoNode.jumpToItem = index
