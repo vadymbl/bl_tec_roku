@@ -1,11 +1,17 @@
 sub GetContent()
-    items = []
+    row = []
     json = ParseJSON(ReadAsciiFile("pkg:/feed/home.json"))
     for each video in json.videos
-        items.Push({
-            title: video.title
-            url: video.url
-        })
+        movie = CreateObject("roSGNode", "ContentNode")
+        movie.title = video.title
+        movie.url = video.url
+        movie.hdPosterUrl = video.hdPosterUrl
+	    movie.description = "No description provided."
+        row.Push(movie) 
     end for
-    m.top.content.Update({children: items})
+    movieList = {
+        title: "Movies",
+        children: row
+    }
+    m.top.content.Update({children: [movieList]})
 end sub
