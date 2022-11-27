@@ -44,6 +44,9 @@ sub GetContent()
         END IF
     end for
 
-    m.global.addFields({ads: adsFromJson})
+    m.global.addFields({
+        ads: adsFromJson,
+        row_delimiter: VIDS_PER_ROW
+    })
     m.top.content.Update({children: rows})
 end sub
