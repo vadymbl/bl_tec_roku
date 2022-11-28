@@ -8,7 +8,7 @@ sub ShowHomeScreen()
         style: "zoom"
         posterShape: "16x9"
     })
-    homeScreen.ObserveFieldScoped("rowItemSelected", "OnItemSelected")
+    homeScreen.ObserveFieldScoped("itemSelected", "OnItemSelected")
     content = CreateObject("roSGNode", "ContentNode")
     content.Update({
         HandlerConfigGrid: {
