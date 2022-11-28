@@ -37,7 +37,7 @@ sub OnItemSelected(event as Object)
     CreateBrightLineDirect(videoPlayer)
 end sub
 
-sub ShowVideoPlayer(content as Object, itemSelected as Integer) as Object
+sub ShowVideoPlayer(content as Object, rowSelected as Integer, itemSelected as Integer) as Object
     videoNode = CreateObject("roSGNode", "MediaView")
     videoNode.content = content[rowSelected]
     videoNode.jumpToItem = itemSelected
