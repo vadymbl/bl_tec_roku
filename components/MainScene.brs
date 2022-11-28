@@ -26,28 +26,35 @@ end sub
 
 sub SceneThemeUpdate()
     scene = m.top.getScene()
-    scene.updateTheme = {
-        global: {
-        }
-    }
+    
 end sub
 
 
 sub OnItemSelected(event as Object)
     homeScreen = event.GetRoSGNode()
     
-    videoPlayer = ShowVideoPlayer(homeScreen.content.getChildren(-1,0), homeScreen.rowItemSelected[0], homeScreen.rowItemSelected[1])
-    m.currentAd = GetAdObject (homeScreen.rowItemSelected[1])
+    content = homeScreen.content.getChildren(-1,0)
+    rowSelected = homeScreen.rowItemSelected[0]
+    itemSelected = homeScreen.rowItemSelected[1]
+    videoPlayer = ShowVideoPlayer(content, rowSelected,itemSelected )
+    
+    ad = content[rowSelected].getChildren(-1,0)[itemSelected].ad
+
+    m.currentAd = GetAdObject (ad)
     CreateBrightLineDirect(videoPlayer)
 end sub
 
 
 sub ShowVideoPlayer(content as Object, rowSelected as Integer, itemSelected as Integer) as Object
     videoNode = CreateObject("roSGNode", "MediaView")
+    
     videoNode.content = content[rowSelected]
+    
     videoNode.jumpToItem = itemSelected
     videoNode.isContentList = true
     videoNode.control = "play"
+
+    
     m.top.componentController.callFunc("show", {
         view: videoNode
     })
@@ -76,8 +83,8 @@ sub CreateBrightLineDirect(videoNode as Object)
     end if
 end sub
 
-function GetAdObject(adSelected as Integer) as Object
-    ad = m.global.ads[adSelected]
+function GetAdObject(ad as Object) as Object
+    
     m.adStartTime = ad.strtTime
     m.adDuration = ad.duration
     
