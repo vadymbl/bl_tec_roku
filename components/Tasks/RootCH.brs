@@ -1,11 +1,27 @@
 sub GetContent()
     items = []
-    json = ParseJSON(ReadAsciiFile("pkg:/feed/home.json"))
-    for each video in json.videos
-        items.Push({
-            title: video.title
-            url: video.url
-        })
+    rows=[]
+    url=CreateObject("roUrlTransfer")
+    url.SetCertificatesFile("common:/certs/ca-bundle.crt")
+    url.SetUrl("https://no-cache.s3.us-east-2.amazonaws.com/vyarchych-home/tec/public_vids.json")
+    response=ParseJSON(url.GetToString())
+
+    for each video in response?["categories"]?[0]?["videos"]
+        node = CreateObject("roSGNode","ContentNode")
+        node.Title = video.title
+        node.description = video.description
+        node.HDPosterUrl = video.thumb
+        node.url = video.sources[0]
+        rows.Push(video.interactiveAd)
+        items.Push(node)
     end for
-    m.top.content.Update({children: items})
+    
+    nodeCreated={}
+    nodeCreated.title="Contents"
+    nodeCreated.children=items
+
+    listNode=[nodeCreated]
+
+    m.global.addFields({ads:adsArr})
+    m.top.content.Update({children: listNode})
 end sub
