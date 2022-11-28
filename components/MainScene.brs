@@ -3,7 +3,11 @@ sub show(args as Object)
 end sub
 
 sub ShowHomeScreen()
-    homeScreen = CreateObject("roSGNode", "VideoSelectionScreen")
+    homeScreen = CreateObject("roSGNode", "GridView")
+    homeScreen.setFields({
+        style: "zoom"
+        posterShape: "16x9"
+    })
     homeScreen.ObserveFieldScoped("itemSelected", "OnItemSelected")
     content = CreateObject("roSGNode", "ContentNode")
     content.Update({
@@ -12,6 +16,7 @@ sub ShowHomeScreen()
             }
     }, true)
     homeScreen.content = content
+    homeScreen.showSpinner = true
     m.top.componentController.callFunc("show", {
         view: homeScreen
     })
@@ -23,7 +28,7 @@ sub OnItemSelected(event as Object)
 end sub
 
 sub ShowVideoPlayer(content as Object, itemSelected as Integer)
-    videoNode = CreateObject("roSGNode", "Video")
+    videoNode = CreateObject("roSGNode", "MediaView")
     videoNode.control = "play"
     videoNode.content = content
     videoNode.contentIsPlaylist = true
