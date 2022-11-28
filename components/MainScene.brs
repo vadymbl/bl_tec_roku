@@ -3,12 +3,12 @@ sub show(args as Object)
 end sub
 
 sub ShowHomeScreen()
-    homeScreen = CreateObject("roSGNode", "GridView")
+    homeScreen = CreateObject("roSGNode", "MediaView")
     homeScreen.setFields({
         style: "zoom"
         posterShape: "16x9"
     })
-    homeScreen.ObserveFieldScoped("itemSelected", "OnItemSelected")
+    homeScreen.ObserveFieldScoped("rowItemSelected", "OnItemSelected")
     content = CreateObject("roSGNode", "ContentNode")
     content.Update({
         HandlerConfigGrid: {
@@ -24,7 +24,7 @@ end sub
 
 sub OnItemSelected(event as Object)
     homeScreen = event.GetRoSGNode()
-    ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)
+    ShowVideoPlayer(homeScreen.content, homeScreen.itemSelected)\vadymbl\bl_tec_roku
 end sub
 
 sub ShowVideoPlayer(content as Object, itemSelected as Integer)
